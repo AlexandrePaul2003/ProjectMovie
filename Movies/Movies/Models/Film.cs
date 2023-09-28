@@ -1,7 +1,10 @@
-﻿namespace Movies.Models
+﻿using Movies.Models.DAL.Interfaces;
+
+namespace Movies.Models
 {
     public class Film
     {
+        public int id;
         public string titre;
         public DateTime dateSortie;
         public int duree;
@@ -9,6 +12,11 @@
         public List<Acteur> acteurs;
         public Realisateur realisateur;
 
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
         public string Titre
         {
             get { return titre; }
@@ -29,15 +37,19 @@
             get { return synopsis; }
             set {synopsis = value; }
         }
-        public Film(string titre, DateTime dateSortie, int duree, string synopsis,Realisateur real,List<Acteur> acteurs)
+        public Film(int id, string titre, DateTime dateSortie, int duree, string synopsis,Realisateur real,List<Acteur> acteurs)
         {
+            Id = id;
             Titre = titre;
             DateSortie = dateSortie;
             Duree = duree;
             Synopsis = synopsis;
             this.acteurs = acteurs;
             this.realisateur = real;
-
+        }
+        public void Delete(Film film, IMovieDAL movieDAL)
+        {
+            movieDAL.deleteMovie(film);
         }
     }
 }

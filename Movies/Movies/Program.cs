@@ -1,8 +1,18 @@
-var builder = WebApplication.CreateBuilder(args);
+using Movies.Models.DAL;
+using Movies.Models.DAL.Interfaces;
 
+var builder = WebApplication.CreateBuilder(args);
+string connectionString = builder.Configuration.GetConnectionString("default");
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddTransient<IMovieDAL>(ud => new MovieDAL(connectionString));
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
