@@ -47,9 +47,9 @@ namespace Movies.Models
             this.acteurs = acteurs;
             this.realisateur = real;
         }
-        public void Delete(Film film, IMovieDAL movieDAL)
+        public void Delete(IMovieDAL movieDAL)
         {
-            movieDAL.deleteMovie(film);
+            movieDAL.deleteMovie(this);
         }
     }
 }
